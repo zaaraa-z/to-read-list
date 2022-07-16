@@ -4,7 +4,9 @@
       <input type="text" v-model="title" placeholder="Book title..." />
       <input type="text" v-model="author" placeholder="Book author..." />
       <input type="text" v-model="pages" placeholder="Book pages..." />
+
       <p id="error">fields can not be empty!</p>
+
       <button @click.prevent="saveBookInfo">Save to my list</button>
     </form>
 
@@ -12,12 +14,20 @@
       <li class="message" v-if="books.length === 0">
         There is no books in your list yet!
       </li>
-      <li v-else v-for="(item, index) in books" :key="index">
-        <p>
-          <strong>{{ item.title }}</strong> by {{ item.author }} -
-          {{ item.pages }} pages <span @click="remove(index)">x</span>
-        </p>
-      </li>
+      <transition-group
+        v-if="books.length !== 0"
+        name="list-items"
+        enter-active-class="animated bounceInUp"
+        leave-active-class="animated bounceOutDown"
+      >
+        <li v-for="(item, index) in books" :key="index">
+          <p>
+            <strong>{{ item.title }}</strong> by {{ item.author }} -
+            {{ item.pages }} pages
+            <span class="remove" @click="remove(index)">x</span>
+          </p>
+        </li>
+      </transition-group>
     </ul>
   </section>
 </template>
@@ -137,7 +147,7 @@ li:hover {
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.663);
   transition: 0.3s;
 }
-li:hover span {
+li:hover span.remove {
   color: black;
   font-weight: bold;
 }
@@ -151,7 +161,7 @@ li.message:hover {
   box-shadow: none;
 }
 
-span {
+span.remove {
   color: rgb(92, 31, 205);
   float: right;
   cursor: pointer;
@@ -163,6 +173,5 @@ span {
 }
 #error.show {
   display: inline-block;
-  color: white;
 }
 </style>
