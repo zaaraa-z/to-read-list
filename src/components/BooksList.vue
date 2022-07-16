@@ -9,7 +9,10 @@
     </form>
 
     <ul>
-      <li v-for="(item, index) in books" :key="index">
+      <li class="message" v-if="books.length === 0">
+        There is no books in your list yet!
+      </li>
+      <li v-else v-for="(item, index) in books" :key="index">
         <p>
           <strong>{{ item.title }}</strong> by {{ item.author }} -
           {{ item.pages }} pages <span @click="remove(index)">x</span>
@@ -137,6 +140,15 @@ li:hover {
 li:hover span {
   color: black;
   font-weight: bold;
+}
+
+li.message {
+  background-color: white;
+  height: 70px;
+}
+li.message:hover {
+  cursor: none;
+  box-shadow: none;
 }
 
 span {
