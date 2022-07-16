@@ -1,17 +1,18 @@
 <template>
   <section>
-    <form action="">
-      <input type="text" placeholder="Book title..." />
-      <input type="text" placeholder="Book author..." />
-      <input type="text" placeholder="Book pages..." />
-      <button>Save to my list</button>
+    <form>
+      <input type="text" v-model="title" placeholder="Book title..." />
+      <input type="text" v-model="author" placeholder="Book author..." />
+      <input type="text" v-model="pages" placeholder="Book pages..." />
+      <p id="error">fields can not be empty!</p>
+      <button @click.prevent="saveBookInfo">Save to my list</button>
     </form>
 
     <ul>
       <li v-for="(item, index) in books" :key="index">
         <p>
           <strong>{{ item.title }}</strong> by {{ item.author }} -
-          {{ item.pages }} pages <span>x</span>
+          {{ item.pages }} pages <span @click="remove(index)">x</span>
         </p>
       </li>
     </ul>
@@ -23,6 +24,9 @@ export default {
   name: "BooksList",
   data: function () {
     return {
+      title: "",
+      author: "",
+      pages: "",
       books: [
         {
           title: "Atomic Habits",
@@ -36,6 +40,28 @@ export default {
         },
       ],
     };
+  },
+
+  methods: {
+    saveBookInfo: function () {
+      if (this.title !== "" && this.author !== "" && this.pages !== "") {
+        document.getElementById("error").classList.remove("show");
+        this.books.push({
+          title: this.title,
+          author: this.author,
+          pages: this.pages,
+        });
+        this.title = "";
+        this.author = "";
+        this.pages = "";
+      } else {
+        document.getElementById("error").classList.add("show");
+      }
+    },
+
+    remove: function (index) {
+      this.books.splice(index, 1);
+    },
   },
 };
 </script>
@@ -101,6 +127,7 @@ li {
   padding: 6px 20px;
   margin-bottom: 10px;
   border-radius: 5px;
+  font-size: 14px;
   transition: 0.3s;
 }
 li:hover {
@@ -116,5 +143,14 @@ span {
   color: rgb(92, 31, 205);
   float: right;
   cursor: pointer;
+}
+
+#error {
+  display: none;
+  color: white;
+}
+#error.show {
+  display: inline-block;
+  color: white;
 }
 </style>
