@@ -3,18 +3,23 @@
     <a hidden href="https://www.freepik.com/vectors/education-frame"
       >Education frame vector created by stockgiu - www.freepik.com</a
     >
-    <h2>So, what is next book?</h2>
-    <BooksList></BooksList>
+    <header>
+      <h1>To-Read-List!</h1>
+      <p>So, what is next book?</p>
+    </header>
+
+    <nav>
+      <router-link to="/">App</router-link>
+      <router-link to="/about">About</router-link>
+    </nav>
+
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import BooksList from "./components/BooksList.vue";
 export default {
   name: "App",
-  components: {
-    BooksList,
-  },
 };
 </script>
 
@@ -24,16 +29,16 @@ export default {
 }
 
 body {
-  background: url(./assets/bg.jpg) center center no-repeat;
+  background: url(./assets/bg.jpg) center center;
   background-size: cover;
   height: 100vh;
   margin: 0;
 }
 
-h2 {
-  background-color: rgba(25, 5, 77, 0.95);
+header {
+  background-color: rgb(86 77 109 / 95%);
   color: rgba(255, 255, 255, 0.88);
-  padding: 20px;
+  padding: 10px;
   margin-bottom: 30px;
 }
 
@@ -44,5 +49,32 @@ h2 {
   text-align: center;
   color: #1d0934;
   margin-top: 30px;
+}
+
+nav {
+  padding: 10px 0;
+  width: 80%;
+  max-width: 600px;
+  margin: auto;
+  text-align: left;
+}
+
+nav a {
+  text-decoration: none;
+  padding: 0 10px;
+  font-weight: bold;
+  color: white;
+  background-color: black;
+  display: inline-block;
+  line-height: 50px;
+  text-align: center;
+  width: 80px;
+  margin-right: 4px;
+  border: solid 1px transparent;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
+  border-color: #42b983;
 }
 </style>
